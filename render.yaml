@@ -1,0 +1,17 @@
+# Render blueprint: one web service serves both the API and the built React app
+services:
+  - type: web
+    name: draftly
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: DB_FILE
+        value: /tmp/draftly.db   # free instances have no persistent disk; demo data is re-seeded on restart
+      - key: DEMO_RESET_LINKS
+        value: "1"   # no email service: forgot-password shows the reset link on screen (demo only)
+      - key: GOOGLE_CLIENT_ID
+        sync: false   # paste your Google OAuth client id in the Render dashboard
